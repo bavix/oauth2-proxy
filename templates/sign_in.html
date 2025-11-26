@@ -1,0 +1,51 @@
+{{define "sign_in.html"}}
+{{ template "header.html" . }}
+<main class="min-h-screen flex items-center justify-center p-4" style="height:100vh;overflow:auto;">
+  <section class="pixel-box max-w-md w-full p-8">
+    <header class="text-center mb-8">
+      <h1 class="pixel-text text-3xl font-bold mb-2 text-pixel-text">ACCESS TERMINAL</h1>
+      <p class="text-pixel-text-muted">SECURE AUTHENTICATION PORTAL</p>
+    </header>
+
+    {{ if .SignInMessage }}
+    <div class="pixel-box-filled p-4 mb-6 text-center">
+      <p class="text-pixel-text">{{.SignInMessage}}</p>
+    </div>
+    {{ end }}
+
+    <div class="space-y-4">
+      <form method="GET" action="{{.ProxyPrefix}}/start">
+        <input type="hidden" name="rd" value="{{.Redirect}}">
+        <button type="submit" class="pixel-button pixel-button-primary w-full">
+          <span class="pixel-text">SIGN IN WITH {{.ProviderName}}</span>
+        </button>
+      </form>
+    </div>
+
+    {{ if .CustomLogin }}
+    <div class="mt-8 pt-6 border-t border-pixel-border">
+      <h3 class="pixel-text text-lg font-bold text-center mb-6 text-pixel-accent">DIRECT ACCESS</h3>
+      <form method="POST" action="{{.ProxyPrefix}}/sign_in" class="space-y-4">
+        <input type="hidden" name="rd" value="{{.Redirect}}">
+        <div class="space-y-2">
+          <label for="username" class="pixel-label">USERNAME</label>
+          <input id="username" name="username" class="pixel-input w-full" type="text" placeholder="ENTER USERNAME" required>
+        </div>
+        <div class="space-y-2">
+          <label for="password" class="pixel-label">PASSWORD</label>
+          <input id="password" name="password" class="pixel-input w-full" type="password" placeholder="ENTER PASSWORD" required>
+        </div>
+        <button type="submit" class="pixel-button pixel-button-primary w-full">
+          <span class="pixel-text">AUTHENTICATE</span>
+        </button>
+      </form>
+    </div>
+    {{ end }}
+
+  </section>
+</main>
+
+{{ template "footer.html" . }}
+{{end}}
+
+

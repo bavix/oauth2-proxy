@@ -1,0 +1,73 @@
+{{define "error.html"}}
+{{ template "header.html" . }}
+<main class="min-h-screen flex items-center justify-center p-4" style="height:100vh;overflow:auto;">
+  <section class="pixel-box max-w-2xl w-full p-8 text-center">
+    <div class="error-code-number mb-6">{{ if .StatusCode }}{{ .StatusCode }}{{ else }}{{ .ErrType }}{{ end }}</div>
+    <h1 class="pixel-text text-3xl font-bold mb-6 text-pixel-text">{{ if .Title }}{{ .Title }}{{ else }}{{ .ErrType }}{{ end }}</h1>
+
+    {{ if or .Message .RequestID }}
+    <div class="pixel-box-filled p-6 mb-6 text-left">
+      <div class="flex justify-between items-center mb-4 cursor-pointer error-toggle">
+        <span class="pixel-text font-bold text-pixel-accent">SYSTEM DIAGNOSTICS</span>
+        <span class="text-pixel-text">▼</span>
+      </div>
+      <div class="error-details">
+        {{ if .Message }}
+        <div class="mb-4">
+          <strong class="text-pixel-accent">MESSAGE:</strong><br>
+          <span class="text-pixel-text">{{.Message}}</span>
+        </div>
+        {{ end }}
+        {{ if .RequestID }}
+        <div>
+          <strong class="text-pixel-accent">REQUEST ID:</strong> <span class="text-pixel-text">{{.RequestID}}</span>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+    {{ end }}
+
+    {{ if .Redirect }}
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <a href="{{.Redirect}}" class="pixel-button pixel-button-danger flex-1 text-center">
+        <span class="pixel-text">GO BACK</span>
+      </a>
+      <a href="{{.ProxyPrefix}}/sign_in" class="pixel-button pixel-button-primary flex-1 text-center">
+        <span class="pixel-text">SIGN IN</span>
+      </a>
+    </div>
+    {{ end }}
+  </section>
+</main>
+
+<div class="fixed bottom-4 left-4 right-4 text-center">
+  <p class="text-pixel-text-muted text-sm">
+    {{ if eq .Footer "-" }}
+    {{ else if eq .Footer ""}}
+    <a href="https://github.com/oauth2-proxy/oauth2-proxy" class="text-pixel-text-muted hover:text-pixel-accent">OAUTH2-PROXY</a> v{{.Version}}
+    {{ else }}
+    {{.Footer}}
+    {{ end }}
+  </p>
+</div>
+
+<script>
+  document.documentElement.classList.add('dark');
+  document.addEventListener('DOMContentLoaded', function() {
+    const toggle = document.querySelector('.error-toggle');
+    const details = document.querySelector('.error-details');
+
+    if (toggle && details) {
+      toggle.addEventListener('click', function() {
+        details.classList.toggle('hidden');
+        const icon = this.querySelector('span:last-child');
+        icon.textContent = details.classList.contains('hidden') ? '▶' : '▼';
+      });
+    }
+  });
+</script>
+
+{{ template "footer.html" . }}
+{{end}}
+
+

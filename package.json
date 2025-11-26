@@ -1,0 +1,10 @@
+{
+  "name": "oauth2-proxy-babichev",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@bavix/babichev-design": "1.0.16"
+  }
+}
+
+

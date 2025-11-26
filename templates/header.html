@@ -1,0 +1,25 @@
+{{define "header.html"}}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ACCESS TERMINAL</title>
+  <style>
+    {{- template "babichev-design.css" . -}}
+  </style>
+</head>
+<body class="min-h-screen">
+  {{ $logo := "client_logo_url" | extra }}
+  {{ if $logo }}
+    <div style="position: absolute; top: 12px; left: 12px; z-index: 30;">
+      {{ if eq $logo "./themes/mascot.svg" }}
+        {{ template "mascot.svg" . }}
+      {{ else }}
+        <img src="{{ $logo }}" alt="client logo" style="width:48px;height:48px;object-fit:contain;">
+      {{ end }}
+    </div>
+  {{ end }}
+{{end}}
+
+
