@@ -1,14 +1,35 @@
 version: 2
 updates:
-  - package-ecosystem: github-actions
-    directory: "/"
+  - package-ecosystem: npm
+    directory: /
     schedule:
       interval: daily
+    groups:
+      npm:
+        patterns:
+          - "*"
     open-pull-requests-limit: 10
+    commit-message:
+      prefix: "chore(npm-deps)"
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: daily
+    groups:
+      actions:
+        patterns:
+          - "*"
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: "ci(deps)"
   - package-ecosystem: docker
     directory: "/"
     schedule:
       interval: daily
+    groups:
+      npm:
+        patterns:
+          - "*"
     open-pull-requests-limit: 10
-
-
+    commit-message:
+      prefix: "ci(docker)"
