@@ -1,4 +1,4 @@
-FROM node:25-alpine AS build
+FROM node:26-alpine AS build
 WORKDIR /build
 COPY package.json package-lock.json* ./
 RUN npm ci --production --no-audit --no-fund || npm install --production --no-audit --no-fund
